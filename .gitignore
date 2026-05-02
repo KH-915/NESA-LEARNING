@@ -1,0 +1,54 @@
+## .NET / Visual Studio
+bin/
+obj/
+out/
+[Dd]ebug/
+[Rr]elease/
+
+## Visual Studio Specific
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+.vs-code/
+
+## VS Code Specific
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## Secrets and Local Settings (CRITICAL)
+appsettings.Development.json
+appsettings.Local.json
+*.secrets.json
+.env
+
+## Testing and Coverage
+TestResults/
+*.sequenced
+nunit_dependencies/
+*.pyc
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## OS Specific
+.DS_Store
+Thumbs.db
+
+## Node.js / Frontend (If using React/Angular templates)
+node_modules/
+dist/
+npm-debug.log*
+yarn-error.log*
+
+## Tools
+.ionide/
+.fake/
+.paket/
