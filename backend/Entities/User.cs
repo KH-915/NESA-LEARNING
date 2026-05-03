@@ -11,7 +11,10 @@ public class User
     public int Id { get; set; }
     public string Username { get; set; } = "";
     public string PasswordHash { get; set; } = "";
-    public UserRole? Role { get; set; } = UserRole.Employee;
+    public string Email { get; set; } = "";
+    public string Phone { get; set; } = "";
+    public UserRole Role { get; set; } = UserRole.Guest;
     public int? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
+    public bool IsActive { get; set; } = true;
 }

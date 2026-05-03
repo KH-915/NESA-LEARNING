@@ -94,6 +94,7 @@ public class EmployeeController : ControllerBase
     }
 
     // Update
+    [HttpPut]
     public async Task<IActionResult> UpdateEmployee(int Id, EmployeeUpdateDTO employeeUpdateDTO)
     {
         var existedEmployee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == Id);

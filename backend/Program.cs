@@ -1,5 +1,8 @@
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,24 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+var key = builder.Configuration["Jwt:Key"];
+
+builder.Services.AddAuthentication(options =>
+{
+    // Set a default JWT Authentication
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters(){
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,9 +47,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
-app.MapGet("/", ()=>"Employee Management API working.");
+app.MapGet("/", ()=>"Employee Management API Is Working.");
 
 app.MapControllers();
 
