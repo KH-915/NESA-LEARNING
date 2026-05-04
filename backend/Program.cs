@@ -18,6 +18,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+// Define AllowAngular Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        policy.WithOrigins("https://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var key = builder.Configuration["Jwt:Key"];
 
 builder.Services.AddAuthentication(options =>
@@ -45,7 +59,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+
+app.UseRouting();
+
+// User AllowAngular Policy
+app.UseCors("AllowAngular");
 
 app.UseAuthentication();
 

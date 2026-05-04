@@ -46,13 +46,25 @@ public class AuthController : ControllerBase
         if(user == null){
             return Unauthorized("Username Unavailable!");
         }
+        if(user.IsActive == false){
+            return Unauthorized("This Account Is Deactivated!");
+        }
         if(!BCryptNet.Verify(userLoginDTO.Password, user.PasswordHash)){
             return Unauthorized("Invalid Password, Try Again!");
         }
         var token = CreateToken(user);
+        var UserResponse = new UserResponseDTO{
+            Id = user.Id,
+            Username = user.Username,
+            Email = user.Email,
+            Phone = user.Phone,
+            Role = user.Role,
+            EmployeeId = user.EmployeeId,
+            IsActive = user.IsActive
+        };
         var result = new LoginResponseDTO(){
             Token = token,
-            User = user
+            User = UserResponse
         };
         return Ok(result);
     }
